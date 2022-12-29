@@ -8,6 +8,8 @@ import SignUp from './components/SignUp';
 import PrivateComponent from './components/PrivateComponent';
 import Login from './components/Login';
 import Products from './components/Products';
+import DeleteProduct from './components/DeleteProduct';
+
 
 function App() {
   const [auth, setAuth] = useState(localStorage.getItem('user'))
@@ -20,8 +22,8 @@ function App() {
      <Route element={<PrivateComponent auth={auth}/>}>
      <Route path="/" element={ <Products/>}/>
      <Route path="/update" element={ <h1>update</h1>}/>
-     <Route path="/profile" element={ <h1>profile</h1>}/>
      <Route path="/add" element={ <Add  auth={auth}/>}/>
+     <Route path="/delete" element={ <DeleteProduct  auth={auth}/>}/>
      </Route>
      <Route path="/signup" element={<SignUp setAuth={setAuth} auth={auth} />} />
      <Route path="/login" element={<Login setAuth={setAuth} auth={auth} />} />

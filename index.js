@@ -8,6 +8,7 @@ const app = express();
 dbConnection;
 
 const jwt = require('jsonwebtoken');
+const Product = require('./db/Product');
 var jwtKey = "productProject";
 
 
@@ -100,7 +101,7 @@ app.post("/addProduct",verifyToken, async (req, res) => {
     res.send(result)
 })
 
-app.get('/getProducts', async (req, res) => {
+app.get('/getProducts',verifyToken, async (req, res) => {
     const get = await product.find();
     if (get.length > 0) {
         res.send(get)
@@ -109,6 +110,20 @@ app.get('/getProducts', async (req, res) => {
         console.log(res)
         res.send("no products found")
     }
+})
+
+app.post('/deleteProducts',verifyToken, async (req, res) => {
+    const body = req.body
+    const ids = body.ids
+    console.log(body, ids)
+    if(ids.length > 0) {
+        let result = await Product.deleteMany({_id: { $in: ids}})
+        if(result) {
+            console.log(result)
+        }
+    }
+    const get = await product.find();
+    res.send(get)
 })
 
 
